@@ -5,6 +5,7 @@
  */
 
 import * as vscode from 'vscode';
+import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import * as crypto from 'crypto';
@@ -158,6 +159,43 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
   // A single blank-line-mode change fires `onDidChangeConfiguration` for every
   // open custom editor; without this we'd stack one toast per open .md file.
   private static lastBlankLineSavePromptAt = 0;
+
+  // Cached webview translation bundle. Loaded once on first request from disk
+  // using VS Code's active display language; language can only change via
+  // VS Code restart, which reloads the extension anyway.
+  private cachedWebviewI18n: Record<string, string> | undefined;
+
+  private getWebviewI18nBundle(): Record<string, string> {
+    if (this.cachedWebviewI18n) return this.cachedWebviewI18n;
+    const lang = vscode.env.language ?? 'en';
+    // Try exact match (e.g. zh-cn), then language prefix (e.g. zh).
+    // English needs no bundle — the code carries the source strings as fallbacks.
+    const candidates: string[] = [];
+    if (lang && !lang.toLowerCase().startsWith('en')) {
+      candidates.push(lang);
+      const dash = lang.indexOf('-');
+      if (dash > 0) candidates.push(lang.slice(0, dash));
+    }
+    for (const candidate of candidates) {
+      const filePath = path.join(
+        this.context.extensionUri.fsPath,
+        'l10n',
+        `webview.${candidate}.json`
+      );
+      try {
+        const raw = fs.readFileSync(filePath, 'utf8');
+        const parsed = JSON.parse(raw) as Record<string, string>;
+        if (parsed && typeof parsed === 'object') {
+          this.cachedWebviewI18n = parsed;
+          return parsed;
+        }
+      } catch {
+        // Missing or invalid bundle — try the next candidate, then fall through.
+      }
+    }
+    this.cachedWebviewI18n = {};
+    return this.cachedWebviewI18n;
+  }
 
   private getBlankLineMode(): BlankLineMode {
     const config = vscode.workspace.getConfiguration();
@@ -510,7 +548,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
         e.affectsConfiguration('marktype.blankLines.mode') ||
         e.affectsConfiguration('marktype.paragraph.spacingBefore') ||
         e.affectsConfiguration('marktype.paragraph.spacingAfter') ||
-        e.affectsConfiguration('marktype.zoom')
+        e.affectsConfiguration('marktype.zoom') ||
+        e.affectsConfiguration('marktype.layout.maxWidth')
       ) {
         const config = vscode.workspace.getConfiguration();
         const skipWarning = config.get<boolean>('marktype.imageResize.skipWarning', false);
@@ -536,6 +575,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
           0
         );
         const zoom = config.get<number>('marktype.zoom', 100);
+        const layoutMaxWidth = config.get<number>('marktype.layout.maxWidth', 800);
         const blankLineMode = this.getBlankLineMode();
         if (e.affectsConfiguration('marktype.blankLines.mode')) {
           void this.syncMarkdownlintMd012(blankLineMode).catch(error => {
@@ -561,6 +601,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
           paragraphSpacingBefore: paragraphSpacingBefore,
           paragraphSpacingAfter: paragraphSpacingAfter,
           zoom: zoom,
+          layoutMaxWidth: layoutMaxWidth,
+          webviewI18n: this.getWebviewI18nBundle(),
           blankLineMode,
         });
       }
@@ -658,6 +700,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
     );
     const paragraphSpacingAfter = config.get<number>('marktype.paragraph.spacingAfter', 0);
     const zoom = config.get<number>('marktype.zoom', 100);
+    const layoutMaxWidth = config.get<number>('marktype.layout.maxWidth', 800);
     const blankLineMode = this.getBlankLineMode();
 
     webview.postMessage({
@@ -671,6 +714,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
       paragraphSpacingBefore: paragraphSpacingBefore,
       paragraphSpacingAfter: paragraphSpacingAfter,
       zoom: zoom,
+      layoutMaxWidth: layoutMaxWidth,
+      webviewI18n: this.getWebviewI18nBundle(),
       blankLineMode,
     });
   }
@@ -747,6 +792,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
           0
         );
         const zoom = config.get<number>('marktype.zoom', 100);
+        const layoutMaxWidth = config.get<number>('marktype.layout.maxWidth', 800);
         const blankLineMode = this.getBlankLineMode();
         webview.postMessage({
           type: 'settingsUpdate',
@@ -758,6 +804,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
           paragraphSpacingBefore: paragraphSpacingBefore,
           paragraphSpacingAfter: paragraphSpacingAfter,
           zoom: zoom,
+          layoutMaxWidth: layoutMaxWidth,
+          webviewI18n: this.getWebviewI18nBundle(),
           blankLineMode,
         });
         break;

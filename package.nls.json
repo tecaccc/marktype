@@ -1,0 +1,23 @@
+{
+  "extension.description": "A full-featured WYSIWYG Markdown editor with visual table editing, drag-and-drop images, Mermaid diagrams, and distraction-free writing—all inside VS Code.",
+
+  "command.openFile.title": "Open with Marktype",
+  "command.outline.revealCurrent.title": "Outline: Reveal Current Heading",
+  "command.outline.filter.title": "Outline: Filter Headings",
+  "command.outline.clearFilter.title": "Outline: Clear Filter",
+  "command.copyAiContextRef.title": "Marktype: Copy AI Context Reference (@file#lines)",
+
+  "view.outline.name": "Marktype: Outline",
+
+  "configuration.imagePath.description": "Folder path for saved images. Interpreted relative to marktype.imagePathBase.",
+  "configuration.imagePathBase.description": "Controls whether Image Path is relative to the current markdown file folder or the workspace folder.",
+  "configuration.chromePath.markdownDescription": "Path to Google Chrome or Chromium executable for PDF export. Leave empty to auto-detect.\n\n**Download Chrome:**\n- [Windows/Mac/Linux](https://www.google.com/chrome/)\n- [Chromium (open source)](https://www.chromium.org/getting-involved/download-chromium/)\n\n**Common paths:**\n- **Mac:** `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`\n- **Windows:** `C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe`\n- **Linux:** `/usr/bin/google-chrome` or `/usr/bin/chromium`",
+  "configuration.imageResize.skipWarning.description": "Skip the warning dialog when resizing images. When enabled, images will be resized immediately without confirmation.",
+  "configuration.copyAiContextRef.skipSaveWarning.description": "Skip the warning dialog when 'Copy AI Context Reference' needs to save the file first. When enabled, the document is saved silently before copying the reference.",
+  "configuration.blankLines.mode.description": "Controls whether extra blank lines are preserved or removed in the editor and saved file.",
+  "configuration.imagePreview.hover.enabled.description": "Enable the image hover overlay that shades images and displays metadata (resolution, file size, etc.) on hover.",
+  "configuration.paragraph.spacingBefore.description": "Space before paragraphs in points (margin-top). Default: 0pt",
+  "configuration.paragraph.spacingAfter.description": "Space after paragraphs in points (margin-bottom). Default: 0pt",
+  "configuration.zoom.description": "Zoom level for the editor as a percentage. 100 = default size, 150 = 50% larger, etc.",
+  "configuration.layout.maxWidth.description": "Maximum content width in pixels for the centered reading column. Set to 0 to disable (fill the full panel width)."
+}

@@ -31,6 +31,7 @@ import { HtmlPreservingTable } from './extensions/htmlPreservingTable';
 import { DraggableBlocks } from './extensions/draggableBlocks';
 import { DocumentAuditExtension } from './features/auditDocument';
 import { createFormattingToolbar, createTableMenu, updateToolbarStates } from './BubbleMenuView';
+import { setI18nBundle } from './i18n';
 import { getEditorMarkdownForSync } from './utils/markdownSerialization';
 import type { BlankLineMode } from '../shared/blankLinePolicy';
 import { installBlankLineLexerNormalizer } from './utils/markedLexerNormalizer';
@@ -1751,6 +1752,22 @@ window.addEventListener('openExtensionSettings', () => {
   vscode.postMessage({ type: 'openExtensionSettings' });
 });
 
+// Toggle centered reading column on/off. Flips marktype.layout.maxWidth between
+// 0 (full width) and the most recently-seen non-zero value (defaults to 800).
+// This preserves the user's preferred width across toggles.
+window.addEventListener('toggleLayoutWidth', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const current = ((window as any).layoutMaxWidth as number | undefined) ?? 0;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const lastNonZero = ((window as any).lastNonZeroLayoutMaxWidth as number | undefined) ?? 800;
+  const next = current > 0 ? 0 : lastNonZero;
+  vscode.postMessage({
+    type: 'updateSetting',
+    key: 'marktype.layout.maxWidth',
+    value: next,
+  });
+});
+
 // Zoom: applies zoom level from marktype.zoom setting (percentage, 100 = default).
 // We use a CSS calc() expression so the override stays live — if the user later changes
 // their VS Code editor font size, --md-base-size-override recomputes automatically
@@ -1772,6 +1789,12 @@ function applyZoomLevel(percent: number) {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function applyEditorSettings(message: Record<string, any>) {
+  // Install the translation bundle first so any toolbar refresh below picks up
+  // the right strings. Language can't change without a full extension reload,
+  // so re-setting on every message is a cheap no-op past the first call.
+  if (message.webviewI18n && typeof message.webviewI18n === 'object') {
+    setI18nBundle(message.webviewI18n as Record<string, string>);
+  }
   if (typeof message.paragraphSpacingBefore === 'number') {
     document.documentElement.style.setProperty(
       '--md-paragraph-spacing-before',
@@ -1786,6 +1809,22 @@ function applyEditorSettings(message: Record<string, any>) {
   }
   if (typeof message.zoom === 'number') {
     applyZoomLevel(message.zoom);
+  }
+  if (typeof message.layoutMaxWidth === 'number') {
+    if (message.layoutMaxWidth > 0) {
+      document.documentElement.style.setProperty(
+        '--md-content-max-width',
+        `${message.layoutMaxWidth}px`
+      );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).lastNonZeroLayoutMaxWidth = message.layoutMaxWidth;
+    } else {
+      document.documentElement.style.removeProperty('--md-content-max-width');
+    }
+    // Expose for the toolbar toggle button's isActive() check.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).layoutMaxWidth = message.layoutMaxWidth;
+    updateToolbarStates();
   }
 }
 

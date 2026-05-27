@@ -10,13 +10,17 @@
  */
 
 export interface MermaidTemplate {
+  /** English fallback shown when no translation is loaded for `labelKey`. */
   label: string;
+  /** i18n key used by the toolbar to look up a translated label. */
+  labelKey: string;
   diagram: string;
 }
 
 export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   {
     label: 'Flowchart',
+    labelKey: 'mermaid.template.flowchart',
     diagram: `graph TD
     A[Start] --> B{Decision}
     B -->|Yes| C[Process]
@@ -26,6 +30,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Sequence Diagram',
+    labelKey: 'mermaid.template.sequence',
     diagram: `sequenceDiagram
     participant Client
     participant Server
@@ -37,6 +42,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Class Diagram',
+    labelKey: 'mermaid.template.class',
     diagram: `classDiagram
     class Animal {
         +String name
@@ -51,6 +57,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'State Diagram',
+    labelKey: 'mermaid.template.state',
     diagram: `stateDiagram-v2
     [*] --> Idle
     Idle --> Processing: Start
@@ -61,6 +68,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Entity Relationship Diagram',
+    labelKey: 'mermaid.template.er',
     diagram: `erDiagram
     CUSTOMER ||--o{ ORDER : places
     ORDER ||--|{ LINE-ITEM : contains
@@ -75,6 +83,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Gantt Chart',
+    labelKey: 'mermaid.template.gantt',
     diagram: `gantt
     title Project Schedule
     dateFormat  YYYY-MM-DD
@@ -87,6 +96,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Pie Chart',
+    labelKey: 'mermaid.template.pie',
     diagram: `pie title Distribution
     "Category A" : 45
     "Category B" : 30
@@ -95,6 +105,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'User Journey',
+    labelKey: 'mermaid.template.journey',
     diagram: `journey
     title User Shopping Experience
     section Browse
@@ -106,6 +117,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Git Graph (Timeline)',
+    labelKey: 'mermaid.template.gitGraph',
     diagram: `gitGraph
     commit
     commit
@@ -119,6 +131,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Mindmap',
+    labelKey: 'mermaid.template.mindmap',
     diagram: `mindmap
   root((Project))
     Planning
@@ -133,6 +146,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Requirement Diagram',
+    labelKey: 'mermaid.template.requirement',
     diagram: `requirementDiagram
     requirement user_req {
         id: 1
@@ -147,6 +161,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'C4 Diagram',
+    labelKey: 'mermaid.template.c4',
     diagram: `C4Context
     title System Context diagram for Internet Banking System
     Person(customer, "Customer", "A customer of the bank")
@@ -157,6 +172,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Sankey Diagram',
+    labelKey: 'mermaid.template.sankey',
     diagram: `sankey-beta
     Agricultural 'waste',Bio-conversion,124.729
     Bio-conversion,Liquid,0.597
@@ -166,6 +182,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'XY Chart',
+    labelKey: 'mermaid.template.xy',
     diagram: `xychart-beta
     title "Sales Revenue"
     x-axis [Jan, Feb, Mar, Apr, May]
@@ -175,6 +192,7 @@ export const MERMAID_TEMPLATES: MermaidTemplate[] = [
   },
   {
     label: 'Quadrant Chart',
+    labelKey: 'mermaid.template.quadrant',
     diagram: `quadrantChart
     title Priority Matrix
     x-axis Low Effort --> High Effort

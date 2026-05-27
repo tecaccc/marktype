@@ -1,8 +1,8 @@
 {
   "name": "marktype",
   "displayName": "Marktype",
-  "description": "A full-featured WYSIWYG Markdown editor with visual table editing, drag-and-drop images, Mermaid diagrams, and distraction-free writing—all inside VS Code.",
-  "version": "0.2.1",
+  "description": "%extension.description%",
+  "version": "0.2.2",
   "publisher": "tecacc",
   "author": {
     "name": "Connor",
@@ -91,26 +91,26 @@
     "commands": [
       {
         "command": "marktype.openFile",
-        "title": "Open with Marktype"
+        "title": "%command.openFile.title%"
       },
       {
         "command": "marktype.outline.revealCurrent",
-        "title": "Outline: Reveal Current Heading",
+        "title": "%command.outline.revealCurrent.title%",
         "icon": "$(target)"
       },
       {
         "command": "marktype.outline.filter",
-        "title": "Outline: Filter Headings",
+        "title": "%command.outline.filter.title%",
         "icon": "$(search)"
       },
       {
         "command": "marktype.outline.clearFilter",
-        "title": "Outline: Clear Filter",
+        "title": "%command.outline.clearFilter.title%",
         "icon": "$(close)"
       },
       {
         "command": "marktype.copyAiContextRef",
-        "title": "Marktype: Copy AI Context Reference (@file#lines)"
+        "title": "%command.copyAiContextRef.title%"
       }
     ],
     "keybindings": [
@@ -125,7 +125,7 @@
       "explorer": [
         {
           "id": "marktypeOutline",
-          "name": "Marktype: Outline",
+          "name": "%view.outline.name%",
           "when": "marktype.isActive"
         }
       ]
@@ -169,7 +169,7 @@
         "marktype.imagePath": {
           "type": "string",
           "default": "images",
-          "description": "Folder path for saved images. Interpreted relative to marktype.imagePathBase."
+          "description": "%configuration.imagePath.description%"
         },
         "marktype.imagePathBase": {
           "type": "string",
@@ -178,22 +178,22 @@
             "workspaceFolder"
           ],
           "default": "relativeToDocument",
-          "description": "Controls whether Image Path is relative to the current markdown file folder or the workspace folder."
+          "description": "%configuration.imagePathBase.description%"
         },
         "marktype.chromePath": {
           "type": "string",
           "default": "",
-          "markdownDescription": "Path to Google Chrome or Chromium executable for PDF export. Leave empty to auto-detect.\n\n**Download Chrome:**\n- [Windows/Mac/Linux](https://www.google.com/chrome/)\n- [Chromium (open source)](https://www.chromium.org/getting-involved/download-chromium/)\n\n**Common paths:**\n- **Mac:** `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`\n- **Windows:** `C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe`\n- **Linux:** `/usr/bin/google-chrome` or `/usr/bin/chromium`"
+          "markdownDescription": "%configuration.chromePath.markdownDescription%"
         },
         "marktype.imageResize.skipWarning": {
           "type": "boolean",
           "default": false,
-          "description": "Skip the warning dialog when resizing images. When enabled, images will be resized immediately without confirmation."
+          "description": "%configuration.imageResize.skipWarning.description%"
         },
         "marktype.copyAiContextRef.skipSaveWarning": {
           "type": "boolean",
           "default": false,
-          "description": "Skip the warning dialog when 'Copy AI Context Reference' needs to save the file first. When enabled, the document is saved silently before copying the reference."
+          "description": "%configuration.copyAiContextRef.skipSaveWarning.description%"
         },
         "marktype.blankLines.mode": {
           "type": "string",
@@ -202,12 +202,12 @@
             "strip"
           ],
           "default": "strip",
-          "description": "Controls whether extra blank lines are preserved or removed in the editor and saved file."
+          "description": "%configuration.blankLines.mode.description%"
         },
         "marktype.imagePreview.hover.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Enable the image hover overlay that shades images and displays metadata (resolution, file size, etc.) on hover.",
+          "description": "%configuration.imagePreview.hover.enabled.description%",
           "scope": "application"
         },
         "marktype.paragraph.spacingBefore": {
@@ -215,7 +215,7 @@
           "default": 0,
           "minimum": 0,
           "maximum": 72,
-          "description": "Space before paragraphs in points (margin-top). Default: 0pt",
+          "description": "%configuration.paragraph.spacingBefore.description%",
           "scope": "application"
         },
         "marktype.paragraph.spacingAfter": {
@@ -223,7 +223,7 @@
           "default": 0,
           "minimum": 0,
           "maximum": 72,
-          "description": "Space after paragraphs in points (margin-bottom). Default: 0pt",
+          "description": "%configuration.paragraph.spacingAfter.description%",
           "scope": "application"
         },
         "marktype.zoom": {
@@ -231,7 +231,15 @@
           "default": 100,
           "minimum": 50,
           "maximum": 200,
-          "description": "Zoom level for the editor as a percentage. 100 = default size, 150 = 50% larger, etc.",
+          "description": "%configuration.zoom.description%",
+          "scope": "application"
+        },
+        "marktype.layout.maxWidth": {
+          "type": "number",
+          "default": 800,
+          "minimum": 0,
+          "maximum": 2400,
+          "description": "%configuration.layout.maxWidth.description%",
           "scope": "application"
         }
       }

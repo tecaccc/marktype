@@ -41,7 +41,14 @@
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    margin: 10px 30px;
+    /* Side spacing lives in padding so margin: auto can center the column
+       when --md-content-max-width caps the width. With box-sizing: border-box
+       the padding is included in max-width, so a 800px cap yields a 740px
+       content column (matches design target). */
+    box-sizing: border-box;
+    margin: 10px auto;
+    padding: 0 30px;
+    max-width: var(--md-content-max-width, none);
   }
   
   .markdown-editor .ProseMirror {

@@ -1,4 +1,4 @@
-# Contributing to Markdown for Humans
+# Contributing to Marktype
 
 Welcome! This guide will help you set up the project, understand its architecture, and start contributing.
 
@@ -23,8 +23,8 @@ Welcome! This guide will help you set up the project, understand its architectur
 
 ```bash
 # Clone the repository
-git clone https://github.com/concretios/markdown-for-humans.git
-cd markdown-for-humans
+git clone https://github.com/tecaccc/marktype.git
+cd marktype
 
 # Install dependencies
 npm install
@@ -63,8 +63,8 @@ code --version   # Should be 1.85+
 ### 1. Clone and Install
 
 ```bash
-git clone https://github.com/concretios/markdown-for-humans.git
-cd markdown-for-humans
+git clone https://github.com/tecaccc/marktype.git
+cd marktype
 npm install
 ```
 
@@ -84,11 +84,11 @@ npm run watch:debug
 2. Press **F5** (or Run → Start Debugging)
 3. A new VS Code window opens with the extension loaded
 4. Open any `.md` file
-5. Right-click → **"Open with Markdown for Humans"**
+5. Right-click → **"Open with Marktype"**
 
 ### 4. View Logs and Debug
 
-- **Extension logs**: View → Output → select "Markdown for Humans"
+- **Extension logs**: View → Output → select "Marktype"
 - **Webview DevTools**: In the Extension Development Host, run command `Developer: Open Webview Developer Tools`
 - **Breakpoints**: Set breakpoints in `src/` files; they work in both extension and webview code
 
@@ -258,7 +258,7 @@ After packaging, install the `.vsix` file locally to test:
 
 **Via Command Line:**
 ```bash
-code --install-extension markdown-for-humans-0.1.0.vsix
+code --install-extension marktype-0.1.0.vsix
 ```
 
 **Via VS Code UI:**
@@ -340,7 +340,7 @@ git commit -m "fix: resolve cursor jump after image insert"
 
 ### 🐛 Report Bugs
 
-1. Check [existing issues](https://github.com/concretios/markdown-for-humans/issues)
+1. Check [existing issues](https://github.com/tecaccc/marktype/issues)
 2. Check [KNOWN_ISSUES.md](./KNOWN_ISSUES.md) to see if it's a known issue
 3. **Record a screen video** using [Loom.com](https://www.loom.com) or similar tool showing the bug
 4. Create a new issue with:
@@ -354,7 +354,7 @@ git commit -m "fix: resolve cursor jump after image insert"
 ### 💡 Suggest Features
 
 1. Check existing feature requests
-2. Open a [GitHub Discussion](https://github.com/concretios/markdown-for-humans/discussions)
+2. Open a [GitHub Discussion](https://github.com/tecaccc/marktype/discussions)
 3. Describe the problem it solves
 4. Provide examples/mockups if possible
 
@@ -418,8 +418,8 @@ See [roadmap/README.md](./roadmap/README.md) for detailed planning workflow.
 
 ## Getting Help
 
-- **GitHub Discussions**: [Ask questions](https://github.com/concretios/markdown-for-humans/discussions)
-- **Issue Tracker**: [Report bugs](https://github.com/concretios/markdown-for-humans/issues)
+- **GitHub Discussions**: [Ask questions](https://github.com/tecaccc/marktype/discussions)
+- **Issue Tracker**: [Report bugs](https://github.com/tecaccc/marktype/issues)
 - **Email**: support@concret.io
 
 ### Useful Resources

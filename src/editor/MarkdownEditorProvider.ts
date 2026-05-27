@@ -152,7 +152,7 @@ export function updateFilenameDimensions(
  * Provides WYSIWYG editing using TipTap in a webview
  */
 export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
-  private static readonly MD012_MANAGED_STATE_KEY = 'markdownForHumans.blankLines.managedMd012';
+  private static readonly MD012_MANAGED_STATE_KEY = 'marktype.blankLines.managedMd012';
 
   // Dedup the "Save the file to see the changes." prompt across panels.
   // A single blank-line-mode change fires `onDidChangeConfiguration` for every
@@ -161,7 +161,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 
   private getBlankLineMode(): BlankLineMode {
     const config = vscode.workspace.getConfiguration();
-    const value = config.get<string>('markdownForHumans.blankLines.mode', 'strip');
+    const value = config.get<string>('marktype.blankLines.mode', 'strip');
     return value === 'preserve' ? 'preserve' : 'strip';
   }
 
@@ -292,7 +292,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
   public static register(context: vscode.ExtensionContext): vscode.Disposable {
     const provider = new MarkdownEditorProvider(context);
     const providerRegistration = vscode.window.registerCustomEditorProvider(
-      'markdownForHumans.editor',
+      'marktype.editor',
       provider,
       {
         webviewOptions: {
@@ -386,7 +386,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
   private getImageStorageBasePath(document: vscode.TextDocument): string | null {
     const config = vscode.workspace.getConfiguration();
     const imagePathBase = config.get<string>(
-      'markdownForHumans.imagePathBase',
+      'marktype.imagePathBase',
       'relativeToDocument'
     );
 
@@ -502,42 +502,42 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
     // Listen for configuration changes and update webview
     const configChangeSubscription = vscode.workspace.onDidChangeConfiguration(e => {
       if (
-        e.affectsConfiguration('markdownForHumans.imageResize.skipWarning') ||
-        e.affectsConfiguration('markdownForHumans.copyAiContextRef.skipSaveWarning') ||
-        e.affectsConfiguration('markdownForHumans.imagePath') ||
-        e.affectsConfiguration('markdownForHumans.imagePathBase') ||
-        e.affectsConfiguration('markdownForHumans.imagePreview.hover.enabled') ||
-        e.affectsConfiguration('markdownForHumans.blankLines.mode') ||
-        e.affectsConfiguration('markdownForHumans.paragraph.spacingBefore') ||
-        e.affectsConfiguration('markdownForHumans.paragraph.spacingAfter') ||
-        e.affectsConfiguration('markdownForHumans.zoom')
+        e.affectsConfiguration('marktype.imageResize.skipWarning') ||
+        e.affectsConfiguration('marktype.copyAiContextRef.skipSaveWarning') ||
+        e.affectsConfiguration('marktype.imagePath') ||
+        e.affectsConfiguration('marktype.imagePathBase') ||
+        e.affectsConfiguration('marktype.imagePreview.hover.enabled') ||
+        e.affectsConfiguration('marktype.blankLines.mode') ||
+        e.affectsConfiguration('marktype.paragraph.spacingBefore') ||
+        e.affectsConfiguration('marktype.paragraph.spacingAfter') ||
+        e.affectsConfiguration('marktype.zoom')
       ) {
         const config = vscode.workspace.getConfiguration();
-        const skipWarning = config.get<boolean>('markdownForHumans.imageResize.skipWarning', false);
+        const skipWarning = config.get<boolean>('marktype.imageResize.skipWarning', false);
         const skipAiContextSaveWarning = config.get<boolean>(
-          'markdownForHumans.copyAiContextRef.skipSaveWarning',
+          'marktype.copyAiContextRef.skipSaveWarning',
           false
         );
-        const imagePath = config.get<string>('markdownForHumans.imagePath', 'images');
+        const imagePath = config.get<string>('marktype.imagePath', 'images');
         const imagePathBase = config.get<string>(
-          'markdownForHumans.imagePathBase',
+          'marktype.imagePathBase',
           'relativeToDocument'
         );
         const showImageHoverOverlay = config.get<boolean>(
-          'markdownForHumans.imagePreview.hover.enabled',
+          'marktype.imagePreview.hover.enabled',
           true
         );
         const paragraphSpacingBefore = config.get<number>(
-          'markdownForHumans.paragraph.spacingBefore',
+          'marktype.paragraph.spacingBefore',
           0
         );
         const paragraphSpacingAfter = config.get<number>(
-          'markdownForHumans.paragraph.spacingAfter',
+          'marktype.paragraph.spacingAfter',
           0
         );
-        const zoom = config.get<number>('markdownForHumans.zoom', 100);
+        const zoom = config.get<number>('marktype.zoom', 100);
         const blankLineMode = this.getBlankLineMode();
-        if (e.affectsConfiguration('markdownForHumans.blankLines.mode')) {
+        if (e.affectsConfiguration('marktype.blankLines.mode')) {
           void this.syncMarkdownlintMd012(blankLineMode).catch(error => {
             console.warn('[MD4H] Failed syncing markdownlint MD012 rule:', error);
           });
@@ -638,26 +638,26 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 
     // Get skip warning setting
     const config = vscode.workspace.getConfiguration();
-    const skipWarning = config.get<boolean>('markdownForHumans.imageResize.skipWarning', false);
+    const skipWarning = config.get<boolean>('marktype.imageResize.skipWarning', false);
     const skipAiContextSaveWarning = config.get<boolean>(
-      'markdownForHumans.copyAiContextRef.skipSaveWarning',
+      'marktype.copyAiContextRef.skipSaveWarning',
       false
     );
-    const imagePath = config.get<string>('markdownForHumans.imagePath', 'images');
+    const imagePath = config.get<string>('marktype.imagePath', 'images');
     const imagePathBase = config.get<string>(
-      'markdownForHumans.imagePathBase',
+      'marktype.imagePathBase',
       'relativeToDocument'
     );
     const showImageHoverOverlay = config.get<boolean>(
-      'markdownForHumans.imagePreview.hover.enabled',
+      'marktype.imagePreview.hover.enabled',
       true
     );
     const paragraphSpacingBefore = config.get<number>(
-      'markdownForHumans.paragraph.spacingBefore',
+      'marktype.paragraph.spacingBefore',
       0
     );
-    const paragraphSpacingAfter = config.get<number>('markdownForHumans.paragraph.spacingAfter', 0);
-    const zoom = config.get<number>('markdownForHumans.zoom', 100);
+    const paragraphSpacingAfter = config.get<number>('marktype.paragraph.spacingAfter', 0);
+    const zoom = config.get<number>('marktype.zoom', 100);
     const blankLineMode = this.getBlankLineMode();
 
     webview.postMessage({
@@ -724,29 +724,29 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
         this.updateWebview(document, webview);
         // Also send settings separately
         const config = vscode.workspace.getConfiguration();
-        const skipWarning = config.get<boolean>('markdownForHumans.imageResize.skipWarning', false);
+        const skipWarning = config.get<boolean>('marktype.imageResize.skipWarning', false);
         const skipAiContextSaveWarning = config.get<boolean>(
-          'markdownForHumans.copyAiContextRef.skipSaveWarning',
+          'marktype.copyAiContextRef.skipSaveWarning',
           false
         );
-        const imagePath = config.get<string>('markdownForHumans.imagePath', 'images');
+        const imagePath = config.get<string>('marktype.imagePath', 'images');
         const imagePathBase = config.get<string>(
-          'markdownForHumans.imagePathBase',
+          'marktype.imagePathBase',
           'relativeToDocument'
         );
         const showImageHoverOverlay = config.get<boolean>(
-          'markdownForHumans.imagePreview.hover.enabled',
+          'marktype.imagePreview.hover.enabled',
           true
         );
         const paragraphSpacingBefore = config.get<number>(
-          'markdownForHumans.paragraph.spacingBefore',
+          'marktype.paragraph.spacingBefore',
           0
         );
         const paragraphSpacingAfter = config.get<number>(
-          'markdownForHumans.paragraph.spacingAfter',
+          'marktype.paragraph.spacingAfter',
           0
         );
-        const zoom = config.get<number>('markdownForHumans.zoom', 100);
+        const zoom = config.get<number>('marktype.zoom', 100);
         const blankLineMode = this.getBlankLineMode();
         webview.postMessage({
           type: 'settingsUpdate',
@@ -793,7 +793,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
       case 'openExtensionSettings':
         vscode.commands.executeCommand(
           'workbench.action.openSettings',
-          '@ext:concretio.markdown-for-humans'
+          '@ext:tecacc.marktype'
         );
         break;
       case 'exportDocument':
@@ -1477,7 +1477,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
         }
 
         const config = vscode.workspace.getConfiguration();
-        const imageFolderName = config.get<string>('markdownForHumans.imagePath', 'images');
+        const imageFolderName = config.get<string>('marktype.imagePath', 'images');
         const imagesDir = path.join(saveBasePath, imageFolderName);
 
         // Create folder if needed
@@ -3239,10 +3239,10 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 
       // Immediately notify webview of the setting change
       // This ensures the setting takes effect right away without waiting for next update
-      const skipWarning = config.get<boolean>('markdownForHumans.imageResize.skipWarning', false);
-      const imagePath = config.get<string>('markdownForHumans.imagePath', 'images');
+      const skipWarning = config.get<boolean>('marktype.imageResize.skipWarning', false);
+      const imagePath = config.get<string>('marktype.imagePath', 'images');
       const imagePathBase = config.get<string>(
-        'markdownForHumans.imagePathBase',
+        'marktype.imagePathBase',
         'relativeToDocument'
       );
       webview.postMessage({
@@ -3544,7 +3544,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
                        img-src ${webview.cspSource} https: data: blob:;">
         
         <link href="${styleUri}" rel="stylesheet">
-        <title>Markdown for Humans</title>
+        <title>Marktype</title>
       </head>
       <body>
         <div id="editor"></div>

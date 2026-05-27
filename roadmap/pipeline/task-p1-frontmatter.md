@@ -94,7 +94,7 @@
 1. User opens markdown file:
    ```yaml
    ---
-   title: Getting Started with Markdown for Humans
+   title: Getting Started with Marktype
    date: 2025-11-29
    author: John Doe
    tags: [tutorial, beginner, markdown]
@@ -110,7 +110,7 @@
    ```
    ┌─────────────────────────────────────────────┐
    │                                             │
-   │   Getting Started with Markdown for Humans  │  ← Large title
+   │   Getting Started with Marktype  │  ← Large title
    │   November 29, 2025 · By John Doe           │  ← Subtitle + byline
    │                                             │
    │   🏷️ tutorial  🏷️ beginner  🏷️ markdown    │  ← Tags as pills

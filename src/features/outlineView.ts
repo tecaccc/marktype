@@ -38,7 +38,7 @@ class OutlineTreeItem extends vscode.TreeItem {
     );
     this.description = `H${node.level}`;
     this.command = {
-      command: 'markdownForHumans.navigateToHeading',
+      command: 'marktype.navigateToHeading',
       title: 'Go to heading',
       arguments: [node.pos],
     };
@@ -123,7 +123,7 @@ export class OutlineViewProvider implements vscode.TreeDataProvider<OutlineTreeI
   private updateFilterContext() {
     vscode.commands.executeCommand(
       'setContext',
-      'markdownForHumans.outlineFilterActive',
+      'marktype.outlineFilterActive',
       this.filterText.length > 0
     );
   }

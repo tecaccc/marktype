@@ -4,11 +4,11 @@
 
 ## Acceptance of Terms
 
-Welcome to Markdown for Humans. By accessing, downloading, installing, or using the Markdown for Humans extension ("Extension") for Visual Studio Code, you agree to be bound by these Terms of Use ("Terms"). If you do not agree to these Terms, do not use the Extension.
+Welcome to Marktype. By accessing, downloading, installing, or using the Marktype extension ("Extension") for Visual Studio Code, you agree to be bound by these Terms of Use ("Terms"). If you do not agree to these Terms, do not use the Extension.
 
 ## Description of Service
 
-Markdown for Humans is a free, open-source Visual Studio Code extension that provides WYSIWYG (What You See Is What You Get) markdown editing capabilities. The Extension is provided "as is" without any warranties or guarantees.
+Marktype is a free, open-source Visual Studio Code extension that provides WYSIWYG (What You See Is What You Get) markdown editing capabilities. The Extension is provided "as is" without any warranties or guarantees.
 
 ## Use License
 
@@ -147,7 +147,7 @@ For questions about these Terms, please contact:
 **Concret.io**  
 **Email:** legal@concret.io  
 **Website:** https://concret.io  
-**GitHub:** https://github.com/concretios/markdown-for-humans
+**GitHub:** https://github.com/tecaccc/marktype
 
 ---
 

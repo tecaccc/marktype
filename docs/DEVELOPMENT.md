@@ -1,4 +1,4 @@
-# Markdown for Humans - Development Guide
+# Marktype - Development Guide
 
 **Development roadmap, design principles, and philosophy**
 
@@ -619,8 +619,8 @@ Contributors using any AI coding assistant can benefit from:
 ### For Users
 
 - **Documentation**: [README.md](../README.md)
-- **Issue Tracker**: [GitHub Issues](https://github.com/concretios/markdown-for-humans/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/concretios/markdown-for-humans/discussions)
+- **Issue Tracker**: [GitHub Issues](https://github.com/tecaccc/marktype/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/tecaccc/marktype/discussions)
 
 ---
 

@@ -1,12 +1,12 @@
 {
-  "name": "markdown-for-humans",
-  "displayName": "Markdown for Humans: WYSIWYG Editor",
+  "name": "marktype",
+  "displayName": "Marktype",
   "description": "A full-featured WYSIWYG Markdown editor with visual table editing, drag-and-drop images, Mermaid diagrams, and distraction-free writing—all inside VS Code.",
   "version": "0.2.1",
-  "publisher": "concretio",
+  "publisher": "tecacc",
   "author": {
-    "name": "Abhinav",
-    "email": "abhinav@concret.io"
+    "name": "Connor",
+    "email": "huaikang.fang@gmail.com"
   },
   "license": "MIT",
   "icon": "icon.png",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/concretios/markdown-for-humans"
+    "url": "https://github.com/tecaccc/marktype"
   },
   "bugs": {
-    "url": "https://github.com/concretios/markdown-for-humans/issues"
+    "url": "https://github.com/tecaccc/marktype/issues"
   },
-  "homepage": "https://github.com/concretios/markdown-for-humans#readme",
+  "homepage": "https://github.com/tecaccc/marktype#readme",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -65,8 +65,8 @@
   "contributes": {
     "customEditors": [
       {
-        "viewType": "markdownForHumans.editor",
-        "displayName": "Markdown for Humans",
+        "viewType": "marktype.editor",
+        "displayName": "Marktype",
         "selector": [
           {
             "filenamePattern": "*.md",
@@ -90,88 +90,88 @@
     ],
     "commands": [
       {
-        "command": "markdownForHumans.openFile",
-        "title": "Open with Markdown for Humans"
+        "command": "marktype.openFile",
+        "title": "Open with Marktype"
       },
       {
-        "command": "markdownForHumans.outline.revealCurrent",
+        "command": "marktype.outline.revealCurrent",
         "title": "Outline: Reveal Current Heading",
         "icon": "$(target)"
       },
       {
-        "command": "markdownForHumans.outline.filter",
+        "command": "marktype.outline.filter",
         "title": "Outline: Filter Headings",
         "icon": "$(search)"
       },
       {
-        "command": "markdownForHumans.outline.clearFilter",
+        "command": "marktype.outline.clearFilter",
         "title": "Outline: Clear Filter",
         "icon": "$(close)"
       },
       {
-        "command": "markdownForHumans.copyAiContextRef",
-        "title": "Markdown for Humans: Copy AI Context Reference (@file#lines)"
+        "command": "marktype.copyAiContextRef",
+        "title": "Marktype: Copy AI Context Reference (@file#lines)"
       }
     ],
     "keybindings": [
       {
-        "command": "markdownForHumans.copyAiContextRef",
+        "command": "marktype.copyAiContextRef",
         "key": "alt+c",
         "mac": "alt+c",
-        "when": "activeCustomEditorId == 'markdownForHumans.editor'"
+        "when": "activeCustomEditorId == 'marktype.editor'"
       }
     ],
     "views": {
       "explorer": [
         {
-          "id": "markdownForHumansOutline",
-          "name": "Markdown for Humans: Outline",
-          "when": "markdownForHumans.isActive"
+          "id": "marktypeOutline",
+          "name": "Marktype: Outline",
+          "when": "marktype.isActive"
         }
       ]
     },
     "menus": {
       "explorer/context": [
         {
-          "command": "markdownForHumans.openFile",
+          "command": "marktype.openFile",
           "when": "resourceExtname == .md",
           "group": "navigation"
         }
       ],
       "editor/title/context": [
         {
-          "command": "markdownForHumans.openFile",
-          "when": "resourceExtname == .md && activeCustomEditorId != 'markdownForHumans.editor'",
+          "command": "marktype.openFile",
+          "when": "resourceExtname == .md && activeCustomEditorId != 'marktype.editor'",
           "group": "navigation"
         }
       ],
       "view/title": [
         {
-          "command": "markdownForHumans.outline.revealCurrent",
-          "when": "view == markdownForHumansOutline",
+          "command": "marktype.outline.revealCurrent",
+          "when": "view == marktypeOutline",
           "group": "navigation@1"
         },
         {
-          "command": "markdownForHumans.outline.filter",
-          "when": "view == markdownForHumansOutline && !markdownForHumans.outlineFilterActive",
+          "command": "marktype.outline.filter",
+          "when": "view == marktypeOutline && !marktype.outlineFilterActive",
           "group": "navigation@2"
         },
         {
-          "command": "markdownForHumans.outline.clearFilter",
-          "when": "view == markdownForHumansOutline && markdownForHumans.outlineFilterActive",
+          "command": "marktype.outline.clearFilter",
+          "when": "view == marktypeOutline && marktype.outlineFilterActive",
           "group": "navigation@2"
         }
       ]
     },
     "configuration": {
-      "title": "Markdown for Humans",
+      "title": "Marktype",
       "properties": {
-        "markdownForHumans.imagePath": {
+        "marktype.imagePath": {
           "type": "string",
           "default": "images",
-          "description": "Folder path for saved images. Interpreted relative to markdownForHumans.imagePathBase."
+          "description": "Folder path for saved images. Interpreted relative to marktype.imagePathBase."
         },
-        "markdownForHumans.imagePathBase": {
+        "marktype.imagePathBase": {
           "type": "string",
           "enum": [
             "relativeToDocument",
@@ -180,22 +180,22 @@
           "default": "relativeToDocument",
           "description": "Controls whether Image Path is relative to the current markdown file folder or the workspace folder."
         },
-        "markdownForHumans.chromePath": {
+        "marktype.chromePath": {
           "type": "string",
           "default": "",
           "markdownDescription": "Path to Google Chrome or Chromium executable for PDF export. Leave empty to auto-detect.\n\n**Download Chrome:**\n- [Windows/Mac/Linux](https://www.google.com/chrome/)\n- [Chromium (open source)](https://www.chromium.org/getting-involved/download-chromium/)\n\n**Common paths:**\n- **Mac:** `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`\n- **Windows:** `C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe`\n- **Linux:** `/usr/bin/google-chrome` or `/usr/bin/chromium`"
         },
-        "markdownForHumans.imageResize.skipWarning": {
+        "marktype.imageResize.skipWarning": {
           "type": "boolean",
           "default": false,
           "description": "Skip the warning dialog when resizing images. When enabled, images will be resized immediately without confirmation."
         },
-        "markdownForHumans.copyAiContextRef.skipSaveWarning": {
+        "marktype.copyAiContextRef.skipSaveWarning": {
           "type": "boolean",
           "default": false,
           "description": "Skip the warning dialog when 'Copy AI Context Reference' needs to save the file first. When enabled, the document is saved silently before copying the reference."
         },
-        "markdownForHumans.blankLines.mode": {
+        "marktype.blankLines.mode": {
           "type": "string",
           "enum": [
             "preserve",
@@ -204,13 +204,13 @@
           "default": "strip",
           "description": "Controls whether extra blank lines are preserved or removed in the editor and saved file."
         },
-        "markdownForHumans.imagePreview.hover.enabled": {
+        "marktype.imagePreview.hover.enabled": {
           "type": "boolean",
           "default": true,
           "description": "Enable the image hover overlay that shades images and displays metadata (resolution, file size, etc.) on hover.",
           "scope": "application"
         },
-        "markdownForHumans.paragraph.spacingBefore": {
+        "marktype.paragraph.spacingBefore": {
           "type": "number",
           "default": 0,
           "minimum": 0,
@@ -218,7 +218,7 @@
           "description": "Space before paragraphs in points (margin-top). Default: 0pt",
           "scope": "application"
         },
-        "markdownForHumans.paragraph.spacingAfter": {
+        "marktype.paragraph.spacingAfter": {
           "type": "number",
           "default": 0,
           "minimum": 0,
@@ -226,7 +226,7 @@
           "description": "Space after paragraphs in points (margin-bottom). Default: 0pt",
           "scope": "application"
         },
-        "markdownForHumans.zoom": {
+        "marktype.zoom": {
           "type": "number",
           "default": 100,
           "minimum": 50,

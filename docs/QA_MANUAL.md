@@ -1,4 +1,4 @@
-# Manual QA + Usage Guide — Markdown for Humans (VS Code)
+# Manual QA + Usage Guide — Marktype (VS Code)
 
 This document is for **manual QA engineers** and also doubles as a **user-facing usage guide** for the extension.
 
@@ -28,13 +28,13 @@ Why this matters for QA:
 
 ### Install
 Pick one:
-- Marketplace: install “Markdown for Humans”.
+- Marketplace: install “Marktype”.
 - VSIX: in VS Code, run `Extensions: Install from VSIX...` and choose the `.vsix`.
 
 ### Open a file in the editor
 Pick one:
-- Right click a `.md` file → **Open with Markdown for Humans**
-- Command Palette → **Open with Markdown for Humans**
+- Right click a `.md` file → **Open with Marktype**
+- Command Palette → **Open with Marktype**
 - If you want it to be default: click the file tab’s “Open With…” UI and choose this editor.
 
 ---
@@ -46,7 +46,7 @@ Pick one:
 - A clean reading layout: serif body typography, generous spacing, theme-aware colors.
 
 ### VS Code integration surfaces
-- **Explorer View:** “Markdown for Humans: Outline” (heading tree)
+- **Explorer View:** “Marktype: Outline” (heading tree)
 - **Status bar:** word count (click shows detailed stats)
 - **Command Palette:** outline commands (reveal/filter/clear)
 
@@ -54,7 +54,7 @@ Pick one:
 
 ## 4) Quick smoke test (15–20 minutes)
 
-1. Open `docs/DEVELOPMENT.md` (long doc) in Markdown for Humans and scroll for ~2 minutes.
+1. Open `docs/DEVELOPMENT.md` (long doc) in Marktype and scroll for ~2 minutes.
 2. Type a sentence, apply **Bold** and **Italic**, then `Cmd/Ctrl+S` to save.
 3. Insert a heading (H2), confirm the **Outline view** updates and clicking it navigates.
 4. `Cmd/Ctrl+F` search for a word, jump next/previous, press `Esc` to close search.
@@ -171,7 +171,7 @@ Pick one:
 ### 5.8 Document outline (Explorer view + overlay)
 
 **Surfaces**
-- Explorer view: “Markdown for Humans: Outline”
+- Explorer view: “Marktype: Outline”
 - Toolbar button: “Outline” (overlay)
 
 **What to do**
@@ -297,7 +297,7 @@ Hover an image to reveal a **three-dots** menu, with:
 
 **PDF requirements**
 - Chrome/Chromium is required; the extension will:
-  - use `markdownForHumans.chromePath` if set, otherwise
+  - use `marktype.chromePath` if set, otherwise
   - auto-detect common Chrome/Chromium locations, otherwise
   - prompt you to browse/enter a path or download Chrome.
 
@@ -316,13 +316,13 @@ Hover an image to reveal a **three-dots** menu, with:
 
 Open settings via:
 - Toolbar → “Export settings” (gear) or
-- VS Code Settings search for “Markdown for Humans”
+- VS Code Settings search for “Marktype”
 
 **Settings to verify**
-- `markdownForHumans.imagePath` (default `images`)
-- `markdownForHumans.imagePathBase` (`relativeToDocument` or `workspaceFolder`)
-- `markdownForHumans.chromePath` (PDF export)
-- `markdownForHumans.imageResize.skipWarning`
+- `marktype.imagePath` (default `images`)
+- `marktype.imagePathBase` (`relativeToDocument` or `workspaceFolder`)
+- `marktype.chromePath` (PDF export)
+- `marktype.imageResize.skipWarning`
 
 ---
 

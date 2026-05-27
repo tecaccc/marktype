@@ -9,7 +9,7 @@ import * as vscode from 'vscode';
 let activeWebviewPanel: vscode.WebviewPanel | undefined;
 
 function setActiveContext(isActive: boolean) {
-  vscode.commands.executeCommand('setContext', 'markdownForHumans.isActive', isActive);
+  vscode.commands.executeCommand('setContext', 'marktype.isActive', isActive);
 }
 
 export function setActiveWebviewPanel(panel: vscode.WebviewPanel | undefined) {

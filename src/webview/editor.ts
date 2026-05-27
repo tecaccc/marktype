@@ -228,7 +228,7 @@ const aiContextRefCallbacks = new Map<
 // Webview-only "remember choice for this session" preference for the
 // copy-AI-context save dialog. Cleared whenever the webview is reloaded.
 let aiContextSessionSkipSave = false;
-// Mirrors the user setting `markdownForHumans.copyAiContextRef.skipSaveWarning`,
+// Mirrors the user setting `marktype.copyAiContextRef.skipSaveWarning`,
 // kept in sync via `update` and `settingsUpdate` messages from the host.
 let aiContextSkipSaveWarningSetting = false;
 let blankLineMode: BlankLineMode = 'strip';
@@ -1751,7 +1751,7 @@ window.addEventListener('openExtensionSettings', () => {
   vscode.postMessage({ type: 'openExtensionSettings' });
 });
 
-// Zoom: applies zoom level from markdownForHumans.zoom setting (percentage, 100 = default).
+// Zoom: applies zoom level from marktype.zoom setting (percentage, 100 = default).
 // We use a CSS calc() expression so the override stays live — if the user later changes
 // their VS Code editor font size, --md-base-size-override recomputes automatically
 // instead of being locked to the pixel value captured at call time.

@@ -1010,7 +1010,7 @@ function showResizeModalForLocalImage(
         // Also save to VS Code settings (use captured reference)
         vscodeApi.postMessage({
           type: 'updateSetting',
-          key: 'markdownForHumans.imageResize.skipWarning',
+          key: 'marktype.imageResize.skipWarning',
           value: true,
         });
       }

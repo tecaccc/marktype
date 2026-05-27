@@ -12,10 +12,10 @@ todos:
     content: Check if removed configs are mentioned in README or other documentation
     status: completed
   - id: remove-enableDiagrams
-    content: Remove markdownForHumans.enableDiagrams from package.json (lines 127-131)
+    content: Remove marktype.enableDiagrams from package.json (lines 127-131)
     status: pending
   - id: remove-autoSave
-    content: Remove markdownForHumans.autoSave from package.json (lines 132-136)
+    content: Remove marktype.autoSave from package.json (lines 132-136)
     status: pending
   - id: verify-changes
     content: Verify no code references removed configs and VS Code settings UI updates correctly
@@ -30,25 +30,25 @@ todos:
 
 These are actively used in the codebase:
 
-1. **`markdownForHumans.imagePath`** - Used in:
+1. **`marktype.imagePath`** - Used in:
 
 - `src/editor/MarkdownEditorProvider.ts` (lines 231, 294, 329, 1353)
 - `src/webview/editor.ts` (lines 617-619, 641-643)
 - `src/webview/features/imageDragDrop.ts`, `imageConfirmation.ts`
 - Multiple test files
 
-2. **`markdownForHumans.chromePath`** - Used in:
+2. **`marktype.chromePath`** - Used in:
 
 - `src/features/documentExport.ts` (lines 160, 178, 385, 414, 514)
 - `src/__tests__/features/documentExport.test.ts`
 - PDF export functionality
 
-3. **`markdownForHumans.imageResize.skipWarning`** - Used in:
+3. **`marktype.imageResize.skipWarning`** - Used in:
 
 - `src/editor/MarkdownEditorProvider.ts` (lines 229, 292, 327, 1351)
 - `src/webview/features/imageResizeModal.ts` (lines 600, 617)
 
-4. **`markdownForHumans.imageFilename.includeDimensions`** - Used in:
+4. **`marktype.imageFilename.includeDimensions`** - Used in:
 
 - `src/editor/MarkdownEditorProvider.ts` (lines 230, 293, 328, 647, 1013, 1352)
 - `src/webview/features/imageDragDrop.ts` (lines 918, 970)
@@ -56,7 +56,7 @@ These are actively used in the codebase:
 
 ### ❌ **UNUSED Configurations** (Review for removal)
 
-1. **`markdownForHumans.enableMath`**
+1. **`marktype.enableMath`**
 
 - **Status:** Not implemented
 - **Evidence:** 
@@ -65,7 +65,7 @@ These are actively used in the codebase:
 - KaTeX library is in dependencies but not integrated
 - **Recommendation:** **KEEP** (planned feature, task exists)
 
-2. **`markdownForHumans.enableDiagrams`**
+2. **`marktype.enableDiagrams`**
 
 - **Status:** Always enabled, no conditional logic
 - **Evidence:**
@@ -74,7 +74,7 @@ These are actively used in the codebase:
 - No conditional logic to enable/disable Mermaid
 - **Recommendation:** **REMOVE** (no implementation, always enabled)
 
-3. **`markdownForHumans.autoSave`**
+3. **`marktype.autoSave`**
 
 - **Status:** Not used, redundant
 - **Evidence:**
@@ -107,9 +107,9 @@ These are actively used in the codebase:
 
 1. **`package.json`** (lines 122-136)
 
-- Remove `markdownForHumans.enableDiagrams` (lines 127-131)
-- Remove `markdownForHumans.autoSave` (lines 132-136)
-- Keep `markdownForHumans.enableMath` (lines 122-126) for future use
+- Remove `marktype.enableDiagrams` (lines 127-131)
+- Remove `marktype.autoSave` (lines 132-136)
+- Keep `marktype.enableMath` (lines 122-126) for future use
 
 ## Verification Steps
 

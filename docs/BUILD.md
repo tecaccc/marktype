@@ -1,6 +1,6 @@
 # Build & Release Guide
 
-This document describes the stable, verified build process for the Markdown for Humans VS Code extension.
+This document describes the stable, verified build process for the Marktype VS Code extension.
 
 ## Prerequisites
 
@@ -129,7 +129,7 @@ const CRITICAL_FEATURES = {
 npm run package:release
 
 # Install and test locally
-code --install-extension markdown-for-humans-0.1.0.vsix
+code --install-extension marktype-0.1.0.vsix
 ```
 
 **Note:** `npm run package:release` always creates a **release build** via the `vscode:prepublish` hook. This ensures:
@@ -183,7 +183,7 @@ ovsx create-namespace concretio -p <your-token>
 ovsx publish -p <your-token>
 
 # Verify
-# https://open-vsx.org/extension/concretio/markdown-for-humans
+# https://open-vsx.org/extension/concretio/marktype
 ```
 
 **Result:** Extension becomes available in:
@@ -512,7 +512,7 @@ ls -lh dist/
 1. Always test the actual .vsix file before publishing:
    ```bash
    npm run package:release
-   code --install-extension markdown-for-humans-0.1.0.vsix
+   code --install-extension marktype-0.1.0.vsix
    ```
 
 2. Check browser console in webview (Help > Toggle Developer Tools)
@@ -525,7 +525,7 @@ ls -lh dist/
 ```bash
 # Download your published .vsix
 # Extract and check bundle
-unzip markdown-for-humans-0.1.0.vsix
+unzip marktype-0.1.0.vsix
 grep "myBrokenFeature" extension/dist/webview.js
 ```
 
@@ -541,7 +541,7 @@ npm version patch
 
 # Package and test locally
 npm run package:release
-code --install-extension markdown-for-humans-0.1.1.vsix
+code --install-extension marktype-0.1.1.vsix
 
 # Test thoroughly, then publish
 npm run publish:release
@@ -639,7 +639,7 @@ npm test              # Run all tests
 **Option B: Package Testing (Final verification before release)**
 ```bash
 npm run package:release  # Creates release .vsix (via vscode:prepublish hook)
-code --install-extension markdown-for-humans-X.Y.Z.vsix
+code --install-extension marktype-X.Y.Z.vsix
 ```
 
 Test these features manually:

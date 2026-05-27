@@ -9,7 +9,7 @@ import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 
 /**
- * Search Overlay - In-document search for Markdown for Humans
+ * Search Overlay - In-document search for Marktype
  *
  * Provides a search experience with:
  * - Real-time match highlighting

@@ -15,20 +15,20 @@ export function activate(context: vscode.ExtensionContext) {
   const provider = MarkdownEditorProvider.register(context);
   context.subscriptions.push(provider);
 
-  // Clear active context when switching to non-markdown-for-humans editors
+  // Clear active context when switching to non-marktype editors
   context.subscriptions.push(
     vscode.window.onDidChangeActiveTextEditor(editor => {
       // Custom editors appear as undefined in activeTextEditor, so if we get a text editor here, disable context
       if (editor && editor.document.languageId !== 'markdown') {
         // If a regular text editor is active, clear our active context
         // Note: markdown languageId for default text editor; webview handled via view state events
-        vscode.commands.executeCommand('setContext', 'markdownForHumans.isActive', false);
+        vscode.commands.executeCommand('setContext', 'marktype.isActive', false);
       }
     })
   );
 
   // Register outline tree view provider (Explorer)
-  const outlineTreeView = vscode.window.createTreeView('markdownForHumansOutline', {
+  const outlineTreeView = vscode.window.createTreeView('marktypeOutline', {
     treeDataProvider: outlineViewProvider,
     showCollapseAll: true,
   });
@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Register commands
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownForHumans.openFile', async (uri?: vscode.Uri) => {
+    vscode.commands.registerCommand('marktype.openFile', async (uri?: vscode.Uri) => {
       let targetUri = uri;
 
       const activeEditor = vscode.window.activeTextEditor;
@@ -73,14 +73,14 @@ export function activate(context: vscode.ExtensionContext) {
         await vscode.commands.executeCommand(
           'vscode.openWith',
           targetUri,
-          'markdownForHumans.editor'
+          'marktype.editor'
         );
       }
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownForHumans.toggleSource', () => {
+    vscode.commands.registerCommand('marktype.toggleSource', () => {
       // This will be handled by the webview
       vscode.window.activeTextEditor?.show();
     })
@@ -88,14 +88,14 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Register word count detailed stats command
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownForHumans.showDetailedStats', () => {
+    vscode.commands.registerCommand('marktype.showDetailedStats', () => {
       wordCount.showDetailedStats();
     })
   );
 
   // Register TOC outline toggle command (Option 2 - TOC Overlay)
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownForHumans.toggleTocOutlineView', () => {
+    vscode.commands.registerCommand('marktype.toggleTocOutlineView', () => {
       const panel = getActiveWebviewPanel();
       if (panel) {
         panel.webview.postMessage({ type: 'toggleTocOutlineView' });
@@ -105,7 +105,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Navigate to heading from outline tree
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownForHumans.navigateToHeading', (pos: number) => {
+    vscode.commands.registerCommand('marktype.navigateToHeading', (pos: number) => {
       const panel = getActiveWebviewPanel();
       if (panel) {
         panel.webview.postMessage({ type: 'navigateToHeading', pos });
@@ -114,19 +114,19 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownForHumans.outline.revealCurrent', () => {
+    vscode.commands.registerCommand('marktype.outline.revealCurrent', () => {
       outlineViewProvider.revealActive(outlineTreeView);
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownForHumans.outline.filter', () => {
+    vscode.commands.registerCommand('marktype.outline.filter', () => {
       outlineViewProvider.showFilterInput();
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownForHumans.outline.clearFilter', () => {
+    vscode.commands.registerCommand('marktype.outline.clearFilter', () => {
       outlineViewProvider.clearFilter();
     })
   );
@@ -135,7 +135,7 @@ export function activate(context: vscode.ExtensionContext) {
   // as the toolbar button. The webview owns the selection state, so the host
   // command stays a thin trigger.
   context.subscriptions.push(
-    vscode.commands.registerCommand('markdownForHumans.copyAiContextRef', () => {
+    vscode.commands.registerCommand('marktype.copyAiContextRef', () => {
       const panel = getActiveWebviewPanel();
       if (panel) {
         panel.webview.postMessage({ type: 'triggerCopyAiContextRef' });

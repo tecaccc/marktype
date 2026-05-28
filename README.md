@@ -6,6 +6,24 @@
 
 ---
 
+## 🔱 Fork Notice
+
+> This repository is a fork of [**tecaccc/marktype**](https://github.com/tecaccc/marktype) (originally *Markdown for Humans*, by [Concret.io](https://concret.io)). Full credit for the original editor and its design goes to the upstream authors — this fork builds on top of their work.
+
+### Additions in this fork
+
+On top of upstream, this fork adds the following features:
+
+- **🌐 Chinese (zh-CN) localization** — Toolbar, VS Code settings, and webview UI strings are translated; the editor follows VS Code's display language automatically.
+- **📐 Centered reading layout** — A new `marktype.layout.maxWidth` setting caps the content column width so long lines stay comfortable to read on wide monitors.
+- **📑 Document outline sidebar** — Adds a persistent left/right sidebar variant for the document outline (TOC) in addition to the existing overlay; choose your preferred display via `marktype.outline.displayMode`.
+- **🗂 Frontmatter metadata card** — Optionally renders the document's YAML frontmatter as a clean metadata card at the top of the editor instead of a raw code block. Toggle via `marktype.frontmatter.parsed`.
+- **🧮 LaTeX math rendering (KaTeX)** — Inline `$...$` and block `$$...$$` math are rendered with [KaTeX](https://katex.org). Block formulas support in-place editing: cursor inside shows the source, leaving the block snaps back to the rendered output. Inline formulas can be edited via a lightweight popover.
+
+> All additions are designed to be **opt-in or theme-aware** — they pick up VS Code's primary accent color and respect existing keybindings and settings.
+
+---
+
 ## 🚀 See It In Action
 
 > We also support standard shortcuts like `CTRL/CMD + B`, etc

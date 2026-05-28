@@ -10,6 +10,42 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.2.3] - 2026-05-28
+
+### What's New
+
+#### LaTeX Math Rendering
+KaTeX-powered math expressions render directly in the editor:
+- `$...$` for inline math and `$$...$$` for block math
+- In-place editing — no need to switch to a source view
+- New `src/webview/extensions/math.ts` extension built on Tiptap
+
+#### TOC Sidebar
+The document outline can now be docked alongside the editor:
+- New `marktype.outline.displayMode` setting with `overlay`, `sidebarLeft`, and `sidebarRight` options
+- Better navigation for long documents
+
+#### Frontmatter Card
+YAML frontmatter renders as a clean metadata card at the top of the document:
+- Toggle via the new `marktype.frontmatter.parsed` setting
+- No more raw YAML in the reading view
+
+#### Centered Reading Layout
+- New `marktype.layout.maxWidth` setting (default `800`px) constrains the content column
+- Toolbar toggle button for one-click switching
+
+#### Simplified Chinese Localization (zh-CN)
+- Settings UI, commands, and outline view localized via `package.nls.{,zh-cn}.json`
+- Webview toolbar (BubbleMenu) and Mermaid template labels translated
+- Minimal `t(key, fallback)` module in the webview, keyed off `vscode.env.language`
+- Follows VS Code's display language automatically; English strings remain as fallbacks
+
+### Changed
+
+- Project renamed from **Markdown for Humans** to **Marktype** across docs, package metadata, and source
+
+---
+
 ## [0.2.1] - 2026-05-19
 
 ### Fixed

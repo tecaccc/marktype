@@ -8,7 +8,7 @@
 
 ## 🔱 Fork Notice
 
-> This repository is a fork of [**tecaccc/marktype**](https://github.com/tecaccc/marktype) (originally *Markdown for Humans*, by [Concret.io](https://concret.io)). Full credit for the original editor and its design goes to the upstream authors — this fork builds on top of their work.
+> This repository is a fork of [**concretios/markdown-for-humans**](https://github.com/concretios/markdown-for-humans) (originally *Markdown for Humans*, by [Concret.io](https://concret.io)). Full credit for the original editor and its design goes to the upstream authors — this fork builds on top of their work.
 
 ### Additions in this fork
 

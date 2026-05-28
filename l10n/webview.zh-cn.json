@@ -63,6 +63,10 @@
 
   "toolbar.outline.label": "大纲",
   "toolbar.outline.title": "切换文档大纲 (TOC)",
+  "tocSidebar.title": "文档大纲",
+  "tocSidebar.empty": "暂无标题",
+  "tocSidebar.emptyHint": "添加 # 标题 后可显示文档大纲。",
+  "frontmatterCard.title": "元数据",
   "toolbar.source.label": "源码",
   "toolbar.source.title": "打开源码视图（分屏）",
 

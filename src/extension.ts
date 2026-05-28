@@ -70,11 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       if (targetUri) {
-        await vscode.commands.executeCommand(
-          'vscode.openWith',
-          targetUri,
-          'marktype.editor'
-        );
+        await vscode.commands.executeCommand('vscode.openWith', targetUri, 'marktype.editor');
       }
     })
   );

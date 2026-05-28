@@ -3190,3 +3190,346 @@ body.saving-feedback {
 .audit-fix-button.manual-fix:hover {
   background: var(--vscode-button-hoverBackground);
 }
+
+/* ============================================
+   Frontmatter metadata card
+   ============================================ */
+
+.frontmatter-card {
+  box-sizing: border-box;
+  margin: 12px auto 4px;
+  padding: 12px 18px;
+  max-width: var(--md-content-max-width, none);
+  background-color: var(--md-subtle-bg);
+  border: 1px solid var(--md-border);
+  border-radius: 8px;
+  font-size: calc(var(--md-base-size, 14px) * 0.92);
+  color: var(--md-foreground);
+}
+
+.frontmatter-card-title {
+  font-weight: 600;
+  font-size: calc(var(--md-base-size, 14px) * 0.78);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--md-muted);
+  margin-bottom: 8px;
+}
+
+.frontmatter-card-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 16px;
+  margin: 0;
+}
+
+.frontmatter-card-list dt {
+  font-weight: 500;
+  color: var(--md-muted);
+  white-space: nowrap;
+}
+
+.frontmatter-card-list dd {
+  margin: 0;
+  color: var(--md-foreground);
+  word-break: break-word;
+}
+
+/* Hide the original YAML code block when the card is rendered. We keep the
+   node in the document so editing/persistence still round-trips through the
+   existing wrap/unwrap pipeline. */
+.markdown-editor pre.code-block-highlighted.frontmatter-hidden-block {
+  display: none;
+}
+
+/* ============================================
+   TOC Sidebar
+   ============================================ */
+
+.toc-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 280px;
+  background-color: var(--vscode-sideBar-background, var(--vscode-editor-background));
+  color: var(--md-foreground);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateX(0);
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.toc-sidebar.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.toc-sidebar-left {
+  left: 0;
+  border-right: 1px solid var(--md-border);
+}
+
+.toc-sidebar-right {
+  right: 0;
+  border-left: 1px solid var(--md-border);
+}
+
+.toc-sidebar-left:not(.visible) {
+  transform: translateX(-100%);
+}
+
+.toc-sidebar-right:not(.visible) {
+  transform: translateX(100%);
+}
+
+.toc-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--md-border);
+  flex-shrink: 0;
+}
+
+.toc-sidebar-title {
+  margin: 0;
+  font-size: calc(var(--md-base-size, 14px) * 0.95);
+  font-weight: 600;
+  color: var(--vscode-textLink-foreground);
+}
+
+.toc-sidebar-close {
+  background: transparent;
+  border: none;
+  line-height: 1;
+  color: var(--md-muted);
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+.toc-sidebar-close:hover {
+  background-color: var(--md-hover-bg);
+  color: var(--md-foreground);
+}
+
+.toc-sidebar-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 8px 20px;
+}
+
+.toc-sidebar-item {
+  display: block;
+  width: 100%;
+  padding: 7px 14px;
+  margin: 2px 0;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--md-foreground);
+  font-size: calc(var(--md-base-size, 14px) * 0.9);
+  line-height: 1.5;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.toc-sidebar-item:hover {
+  background-color: var(--md-hover-bg);
+  color: var(--vscode-textLink-foreground);
+}
+
+.toc-sidebar-item:focus {
+  outline: none;
+  background-color: var(--vscode-list-activeSelectionBackground);
+  box-shadow: inset 0 0 0 2px var(--md-focus);
+}
+
+.toc-sidebar-item-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.toc-sidebar-level-1 {
+  padding-left: 14px;
+  font-weight: 600;
+}
+
+.toc-sidebar-level-2 {
+  padding-left: 28px;
+}
+
+.toc-sidebar-level-3 {
+  padding-left: 42px;
+}
+
+.toc-sidebar-level-4 {
+  padding-left: 56px;
+}
+
+.toc-sidebar-level-5 {
+  padding-left: 70px;
+}
+
+.toc-sidebar-level-6 {
+  padding-left: 84px;
+}
+
+.toc-sidebar-empty {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--md-muted);
+}
+
+.toc-sidebar-empty p {
+  margin: 0 0 6px 0;
+}
+
+.toc-sidebar-empty-hint {
+  opacity: 0.8;
+  font-size: calc(var(--md-base-size, 14px) * 0.85);
+}
+
+/* Push editor body content over to make room for the sidebar. The toolbar
+   keeps its position: sticky behavior since it's a sibling of #editor inside
+   body; the padding here applies to body as a whole. */
+body.has-toc-sidebar-left {
+  padding-left: 280px;
+}
+
+body.has-toc-sidebar-right {
+  padding-right: 280px;
+}
+
+/* The sticky formatting toolbar is a sibling of #editor inside <body>, so the
+   body padding shifts it along with the editor. */
+
+/* ============================================
+   Math (KaTeX)
+   ============================================ */
+
+.markdown-editor .math-inline {
+  display: inline-block;
+  padding: 0 2px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.markdown-editor .math-inline:hover {
+  background-color: var(--md-hover-bg);
+}
+
+.markdown-editor .math-inline.ProseMirror-selectednode {
+  outline: 2px solid var(--md-focus);
+  outline-offset: 1px;
+  background-color: var(--md-hover-bg);
+}
+
+.markdown-editor .math-inline.math-error {
+  color: var(--vscode-errorForeground, #f48771);
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 0.9em;
+  background-color: color-mix(in srgb, var(--vscode-errorForeground, #f48771) 12%, transparent);
+  padding: 0 4px;
+}
+
+.markdown-editor .math-inline.math-empty {
+  color: var(--md-muted);
+  font-style: italic;
+}
+
+.markdown-editor .math-block-wrapper {
+  position: relative;
+  margin: 12px 0;
+  padding: 4px 0;
+  border-radius: 6px;
+}
+
+.markdown-editor .math-block-wrapper:hover {
+  background-color: var(--md-hover-bg);
+}
+
+.markdown-editor .math-block-rendered {
+  display: block;
+  text-align: center;
+  padding: 8px 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown-editor .math-block-rendered.math-empty {
+  color: var(--md-muted);
+  font-style: italic;
+  text-align: center;
+}
+
+.markdown-editor .math-block-rendered.math-error {
+  color: var(--vscode-errorForeground, #f48771);
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 0.9em;
+  text-align: left;
+  background-color: color-mix(in srgb, var(--vscode-errorForeground, #f48771) 10%, transparent);
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+.markdown-editor .math-block-source {
+  display: none;
+  margin: 0;
+  padding: 10px 14px;
+  background-color: var(--md-code-bg);
+  color: var(--md-code-fg);
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: calc(var(--md-base-size, 14px) * 0.95);
+  border-radius: 4px;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  border-left: 3px solid var(--vscode-textLink-foreground);
+}
+
+/* When the cursor is inside the math block: show source, hide rendered */
+.markdown-editor .math-block-wrapper.editing .math-block-rendered {
+  display: none;
+}
+
+.markdown-editor .math-block-wrapper.editing .math-block-source {
+  display: block;
+}
+
+/* Tiny popover used to edit inline math source */
+.math-inline-editor {
+  position: absolute;
+  z-index: 200;
+  background-color: var(--vscode-editorWidget-background, var(--vscode-editor-background));
+  border: 1px solid var(--md-border);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  padding: 6px;
+}
+
+.math-inline-editor-input {
+  width: 320px;
+  max-width: 70vw;
+  padding: 6px 8px;
+  background-color: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border, var(--md-border));
+  border-radius: 4px;
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: calc(var(--md-base-size, 14px) * 0.95);
+  outline: none;
+}
+
+.math-inline-editor-input:focus {
+  border-color: var(--md-focus);
+  box-shadow: 0 0 0 1px var(--md-focus);
+}

@@ -241,6 +241,28 @@
           "maximum": 2400,
           "description": "%configuration.layout.maxWidth.description%",
           "scope": "application"
+        },
+        "marktype.frontmatter.parsed": {
+          "type": "boolean",
+          "default": false,
+          "description": "%configuration.frontmatter.parsed.description%",
+          "scope": "application"
+        },
+        "marktype.outline.displayMode": {
+          "type": "string",
+          "enum": [
+            "overlay",
+            "sidebarLeft",
+            "sidebarRight"
+          ],
+          "enumDescriptions": [
+            "%configuration.outline.displayMode.overlay%",
+            "%configuration.outline.displayMode.sidebarLeft%",
+            "%configuration.outline.displayMode.sidebarRight%"
+          ],
+          "default": "overlay",
+          "description": "%configuration.outline.displayMode.description%",
+          "scope": "application"
         }
       }
     }

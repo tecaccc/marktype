@@ -423,10 +423,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
    */
   private getImageStorageBasePath(document: vscode.TextDocument): string | null {
     const config = vscode.workspace.getConfiguration();
-    const imagePathBase = config.get<string>(
-      'marktype.imagePathBase',
-      'relativeToDocument'
-    );
+    const imagePathBase = config.get<string>('marktype.imagePathBase', 'relativeToDocument');
 
     // Untitled docs: default to workspace-level saves when possible (we don't know
     // the final markdown file directory yet).
@@ -549,7 +546,9 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
         e.affectsConfiguration('marktype.paragraph.spacingBefore') ||
         e.affectsConfiguration('marktype.paragraph.spacingAfter') ||
         e.affectsConfiguration('marktype.zoom') ||
-        e.affectsConfiguration('marktype.layout.maxWidth')
+        e.affectsConfiguration('marktype.layout.maxWidth') ||
+        e.affectsConfiguration('marktype.frontmatter.parsed') ||
+        e.affectsConfiguration('marktype.outline.displayMode')
       ) {
         const config = vscode.workspace.getConfiguration();
         const skipWarning = config.get<boolean>('marktype.imageResize.skipWarning', false);
@@ -558,24 +557,17 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
           false
         );
         const imagePath = config.get<string>('marktype.imagePath', 'images');
-        const imagePathBase = config.get<string>(
-          'marktype.imagePathBase',
-          'relativeToDocument'
-        );
+        const imagePathBase = config.get<string>('marktype.imagePathBase', 'relativeToDocument');
         const showImageHoverOverlay = config.get<boolean>(
           'marktype.imagePreview.hover.enabled',
           true
         );
-        const paragraphSpacingBefore = config.get<number>(
-          'marktype.paragraph.spacingBefore',
-          0
-        );
-        const paragraphSpacingAfter = config.get<number>(
-          'marktype.paragraph.spacingAfter',
-          0
-        );
+        const paragraphSpacingBefore = config.get<number>('marktype.paragraph.spacingBefore', 0);
+        const paragraphSpacingAfter = config.get<number>('marktype.paragraph.spacingAfter', 0);
         const zoom = config.get<number>('marktype.zoom', 100);
         const layoutMaxWidth = config.get<number>('marktype.layout.maxWidth', 800);
+        const frontmatterParsed = config.get<boolean>('marktype.frontmatter.parsed', false);
+        const outlineDisplayMode = config.get<string>('marktype.outline.displayMode', 'overlay');
         const blankLineMode = this.getBlankLineMode();
         if (e.affectsConfiguration('marktype.blankLines.mode')) {
           void this.syncMarkdownlintMd012(blankLineMode).catch(error => {
@@ -602,6 +594,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
           paragraphSpacingAfter: paragraphSpacingAfter,
           zoom: zoom,
           layoutMaxWidth: layoutMaxWidth,
+          frontmatterParsed: frontmatterParsed,
+          outlineDisplayMode: outlineDisplayMode,
           webviewI18n: this.getWebviewI18nBundle(),
           blankLineMode,
         });
@@ -686,21 +680,14 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
       false
     );
     const imagePath = config.get<string>('marktype.imagePath', 'images');
-    const imagePathBase = config.get<string>(
-      'marktype.imagePathBase',
-      'relativeToDocument'
-    );
-    const showImageHoverOverlay = config.get<boolean>(
-      'marktype.imagePreview.hover.enabled',
-      true
-    );
-    const paragraphSpacingBefore = config.get<number>(
-      'marktype.paragraph.spacingBefore',
-      0
-    );
+    const imagePathBase = config.get<string>('marktype.imagePathBase', 'relativeToDocument');
+    const showImageHoverOverlay = config.get<boolean>('marktype.imagePreview.hover.enabled', true);
+    const paragraphSpacingBefore = config.get<number>('marktype.paragraph.spacingBefore', 0);
     const paragraphSpacingAfter = config.get<number>('marktype.paragraph.spacingAfter', 0);
     const zoom = config.get<number>('marktype.zoom', 100);
     const layoutMaxWidth = config.get<number>('marktype.layout.maxWidth', 800);
+    const frontmatterParsed = config.get<boolean>('marktype.frontmatter.parsed', false);
+    const outlineDisplayMode = config.get<string>('marktype.outline.displayMode', 'overlay');
     const blankLineMode = this.getBlankLineMode();
 
     webview.postMessage({
@@ -715,6 +702,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
       paragraphSpacingAfter: paragraphSpacingAfter,
       zoom: zoom,
       layoutMaxWidth: layoutMaxWidth,
+      frontmatterParsed: frontmatterParsed,
+      outlineDisplayMode: outlineDisplayMode,
       webviewI18n: this.getWebviewI18nBundle(),
       blankLineMode,
     });
@@ -775,24 +764,17 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
           false
         );
         const imagePath = config.get<string>('marktype.imagePath', 'images');
-        const imagePathBase = config.get<string>(
-          'marktype.imagePathBase',
-          'relativeToDocument'
-        );
+        const imagePathBase = config.get<string>('marktype.imagePathBase', 'relativeToDocument');
         const showImageHoverOverlay = config.get<boolean>(
           'marktype.imagePreview.hover.enabled',
           true
         );
-        const paragraphSpacingBefore = config.get<number>(
-          'marktype.paragraph.spacingBefore',
-          0
-        );
-        const paragraphSpacingAfter = config.get<number>(
-          'marktype.paragraph.spacingAfter',
-          0
-        );
+        const paragraphSpacingBefore = config.get<number>('marktype.paragraph.spacingBefore', 0);
+        const paragraphSpacingAfter = config.get<number>('marktype.paragraph.spacingAfter', 0);
         const zoom = config.get<number>('marktype.zoom', 100);
         const layoutMaxWidth = config.get<number>('marktype.layout.maxWidth', 800);
+        const frontmatterParsed = config.get<boolean>('marktype.frontmatter.parsed', false);
+        const outlineDisplayMode = config.get<string>('marktype.outline.displayMode', 'overlay');
         const blankLineMode = this.getBlankLineMode();
         webview.postMessage({
           type: 'settingsUpdate',
@@ -805,6 +787,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
           paragraphSpacingAfter: paragraphSpacingAfter,
           zoom: zoom,
           layoutMaxWidth: layoutMaxWidth,
+          frontmatterParsed: frontmatterParsed,
+          outlineDisplayMode: outlineDisplayMode,
           webviewI18n: this.getWebviewI18nBundle(),
           blankLineMode,
         });
@@ -839,10 +823,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
         );
         break;
       case 'openExtensionSettings':
-        vscode.commands.executeCommand(
-          'workbench.action.openSettings',
-          '@ext:tecacc.marktype'
-        );
+        vscode.commands.executeCommand('workbench.action.openSettings', '@ext:tecacc.marktype');
         break;
       case 'exportDocument':
         this.handleExportDocument(message, document);
@@ -3289,10 +3270,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
       // This ensures the setting takes effect right away without waiting for next update
       const skipWarning = config.get<boolean>('marktype.imageResize.skipWarning', false);
       const imagePath = config.get<string>('marktype.imagePath', 'images');
-      const imagePathBase = config.get<string>(
-        'marktype.imagePathBase',
-        'relativeToDocument'
-      );
+      const imagePathBase = config.get<string>('marktype.imagePathBase', 'relativeToDocument');
       webview.postMessage({
         type: 'settingsUpdate',
         skipResizeWarning: skipWarning,

@@ -210,6 +210,10 @@ describe('MarkdownEditorProvider undo/redo safety', () => {
       paragraphSpacingBefore: 0,
       paragraphSpacingAfter: 0,
       zoom: 100,
+      layoutMaxWidth: 800,
+      frontmatterParsed: false,
+      outlineDisplayMode: 'overlay',
+      webviewI18n: {},
     });
   });
 
@@ -253,6 +257,10 @@ describe('MarkdownEditorProvider undo/redo safety', () => {
       paragraphSpacingBefore: 0,
       paragraphSpacingAfter: 0,
       zoom: 100,
+      layoutMaxWidth: 800,
+      frontmatterParsed: false,
+      outlineDisplayMode: 'overlay',
+      webviewI18n: {},
     });
 
     getConfigurationSpy.mockRestore();

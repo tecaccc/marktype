@@ -32,6 +32,7 @@ module.exports = {
     moduleNameMapper: {
         '^vscode$': '<rootDir>/src/__mocks__/vscode.ts',
         '^mermaid$': '<rootDir>/src/__mocks__/mermaid.ts',
+        '^katex$': '<rootDir>/src/__mocks__/katex.ts',
         '\\.(css|less|scss)$': '<rootDir>/src/__mocks__/styleMock.ts'
     },
     setupFiles: ['<rootDir>/src/__tests__/setup.ts'],

@@ -19,5 +19,10 @@
   "configuration.paragraph.spacingBefore.description": "Space before paragraphs in points (margin-top). Default: 0pt",
   "configuration.paragraph.spacingAfter.description": "Space after paragraphs in points (margin-bottom). Default: 0pt",
   "configuration.zoom.description": "Zoom level for the editor as a percentage. 100 = default size, 150 = 50% larger, etc.",
-  "configuration.layout.maxWidth.description": "Maximum content width in pixels for the centered reading column. Set to 0 to disable (fill the full panel width)."
+  "configuration.layout.maxWidth.description": "Maximum content width in pixels for the centered reading column. Set to 0 to disable (fill the full panel width).",
+  "configuration.frontmatter.parsed.description": "Parse YAML frontmatter at the top of the document and render it as a metadata card. When disabled, frontmatter is shown as a raw YAML code block.",
+  "configuration.outline.displayMode.description": "How the document outline (TOC) opens when toggled from the toolbar.",
+  "configuration.outline.displayMode.overlay": "Centered floating overlay (default).",
+  "configuration.outline.displayMode.sidebarLeft": "Persistent sidebar on the left side of the editor.",
+  "configuration.outline.displayMode.sidebarRight": "Persistent sidebar on the right side of the editor."
 }

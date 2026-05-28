@@ -7,6 +7,7 @@
 // Import CSS files (esbuild will bundle these)
 import './editor.css';
 import './codicon.css';
+import 'katex/dist/katex.min.css';
 
 import { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
@@ -18,6 +19,7 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { CustomImage } from './extensions/customImage';
 import { lowlight } from 'lowlight';
 import { Mermaid } from './extensions/mermaid';
+import { MathInline, MathBlock, installMathTokenizers } from './extensions/math';
 import { IndentedImageCodeBlock } from './extensions/indentedImageCodeBlock';
 import { parsePreservedCodeBlock, renderPreservedCodeBlock } from './extensions/preservedCodeBlock';
 import { SpaceFriendlyImagePaths } from './extensions/spaceFriendlyImagePaths';
@@ -40,7 +42,14 @@ import {
   hasPendingImageSaves,
   getPendingImageCount,
 } from './features/imageDragDrop';
-import { toggleTocOverlay } from './features/tocOverlay';
+import { toggleTocOverlay, hideTocOverlay, isTocVisible } from './features/tocOverlay';
+import {
+  applyTocDisplayMode,
+  hideTocSidebar,
+  isTocSidebarVisible,
+  toggleTocSidebar,
+} from './features/tocSidebar';
+import { refreshFrontmatterCard } from './features/frontmatterCard';
 import { toggleSearchOverlay } from './features/searchOverlay';
 import { showLinkDialog } from './features/linkDialog';
 import { processPasteContent, parseFencedCode } from './utils/pasteHandler';
@@ -233,6 +242,9 @@ let aiContextSessionSkipSave = false;
 // kept in sync via `update` and `settingsUpdate` messages from the host.
 let aiContextSkipSaveWarningSetting = false;
 let blankLineMode: BlankLineMode = 'strip';
+let frontmatterParsedSetting = false;
+type TocDisplayMode = 'overlay' | 'sidebarLeft' | 'sidebarRight';
+let tocDisplayMode: TocDisplayMode = 'overlay';
 
 // Pending document-dirty queries, keyed by requestId. The host replies with
 // `documentDirtyResponse`; we look up the resolver here.
@@ -514,6 +526,9 @@ function initializeEditor(initialContent: string) {
       extensions: [
         // Mermaid must be before CodeBlockLowlight to intercept mermaid code blocks
         Mermaid,
+        // Math nodes — parsed via the custom marked tokenizers registered below.
+        MathBlock,
+        MathInline,
         // Must be before CodeBlockLowlight to intercept indented "code" tokens containing images
         IndentedImageCodeBlock,
         // Fallback: treat standalone image lines with spaces in the path as images.
@@ -659,6 +674,7 @@ function initializeEditor(initialContent: string) {
           const markdown = getEditorMarkdownForSync(editor, blankLineMode);
           debouncedUpdate(markdown);
           scheduleOutlineUpdate();
+          refreshFrontmatterCard(editor, frontmatterParsedSetting);
         } catch (error) {
           console.error('[MD4H] Error in onUpdate:', error);
         }
@@ -694,6 +710,7 @@ function initializeEditor(initialContent: string) {
         markdownStorage.markdown?.instance ?? markdownStorage.storage?.markdown?.instance;
       if (markedInstance) {
         installBlankLineLexerNormalizer(markedInstance);
+        installMathTokenizers(markedInstance);
       }
     } catch (error) {
       console.warn('[MD4H] Failed to install blank-line lexer normalizer:', error);
@@ -746,6 +763,7 @@ function initializeEditor(initialContent: string) {
 
     // Initial outline push
     pushOutlineUpdate();
+    refreshFrontmatterCard(editorInstance, frontmatterParsedSetting);
     try {
       const { from } = editorInstance.state.selection;
       vscode.postMessage({ type: 'selectionChange', pos: from });
@@ -1605,6 +1623,7 @@ function updateEditorContent(markdown: string) {
     }
 
     pushOutlineUpdate();
+    refreshFrontmatterCard(editor, frontmatterParsedSetting);
 
     const duration = performance.now() - startTime;
     console.log(`[MD4H] Content updated in ${duration.toFixed(2)}ms`);
@@ -1693,10 +1712,14 @@ if (document.readyState === 'loading') {
 
 // Handle custom event for TOC toggle from toolbar button
 window.addEventListener('toggleTocOutline', () => {
-  if (editor) {
+  if (!editor) return;
+  if (tocDisplayMode === 'overlay') {
     toggleTocOverlay(editor);
-    updateToolbarStates();
+  } else {
+    const side = tocDisplayMode === 'sidebarLeft' ? 'left' : 'right';
+    toggleTocSidebar(editor, side);
   }
+  updateToolbarStates();
 });
 
 // Handle custom event for document audit from toolbar button
@@ -1825,6 +1848,28 @@ function applyEditorSettings(message: Record<string, any>) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).layoutMaxWidth = message.layoutMaxWidth;
     updateToolbarStates();
+  }
+  if (typeof message.frontmatterParsed === 'boolean') {
+    frontmatterParsedSetting = message.frontmatterParsed;
+    if (editor) refreshFrontmatterCard(editor, frontmatterParsedSetting);
+  }
+  if (
+    message.outlineDisplayMode === 'overlay' ||
+    message.outlineDisplayMode === 'sidebarLeft' ||
+    message.outlineDisplayMode === 'sidebarRight'
+  ) {
+    const nextMode = message.outlineDisplayMode as TocDisplayMode;
+    if (nextMode !== tocDisplayMode) {
+      // Hide any currently-shown surface from the previous mode so the user
+      // doesn't end up with both the overlay and a sidebar visible.
+      if (tocDisplayMode === 'overlay' && isTocVisible() && editor) {
+        hideTocOverlay(editor, false);
+      } else if (tocDisplayMode !== 'overlay' && isTocSidebarVisible()) {
+        hideTocSidebar();
+      }
+    }
+    tocDisplayMode = nextMode;
+    if (editor) applyTocDisplayMode(editor, tocDisplayMode);
   }
 }
 

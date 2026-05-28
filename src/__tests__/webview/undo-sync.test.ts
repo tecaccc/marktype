@@ -45,6 +45,11 @@ jest.mock('./../../webview/extensions/customImage', () => ({
   CustomImage: { configure: () => ({}) },
 }));
 jest.mock('./../../webview/extensions/mermaid', () => ({ Mermaid: {} }));
+jest.mock('./../../webview/extensions/math', () => ({
+  MathInline: {},
+  MathBlock: {},
+  installMathTokenizers: jest.fn(),
+}));
 jest.mock('./../../webview/extensions/tabIndentation', () => ({ TabIndentation: {} }));
 jest.mock('./../../webview/extensions/imageEnterSpacing', () => ({ ImageEnterSpacing: {} }));
 jest.mock('./../../webview/extensions/markdownParagraph', () => ({ MarkdownParagraph: {} }));

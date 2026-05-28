@@ -19,5 +19,10 @@
   "configuration.paragraph.spacingBefore.description": "段落上方间距（margin-top），单位为点。默认：0pt",
   "configuration.paragraph.spacingAfter.description": "段落下方间距（margin-bottom），单位为点。默认：0pt",
   "configuration.zoom.description": "编辑器缩放比例（百分比）。100 = 默认大小，150 = 放大 50%，依此类推。",
-  "configuration.layout.maxWidth.description": "居中阅读栏的最大内容宽度（像素）。设为 0 则关闭居中（铺满整个面板宽度）。"
+  "configuration.layout.maxWidth.description": "居中阅读栏的最大内容宽度（像素）。设为 0 则关闭居中（铺满整个面板宽度）。",
+  "configuration.frontmatter.parsed.description": "解析文档开头的 YAML frontmatter 并以元数据卡片形式渲染。关闭时仍显示为原始 YAML 代码块。",
+  "configuration.outline.displayMode.description": "从工具栏切换文档大纲（TOC）时使用的展示方式。",
+  "configuration.outline.displayMode.overlay": "居中浮动弹窗（默认）。",
+  "configuration.outline.displayMode.sidebarLeft": "在编辑器左侧常驻显示。",
+  "configuration.outline.displayMode.sidebarRight": "在编辑器右侧常驻显示。"
 }

@@ -653,7 +653,10 @@ export function createFormattingToolbar(editor: Editor): HTMLElement {
     {
       type: 'button',
       label: t('toolbar.layoutWidth.label', 'Centered layout'),
-      title: t('toolbar.layoutWidth.title', 'Toggle centered reading column (full-width ↔ capped)'),
+      title: t(
+        'toolbar.layoutWidth.title',
+        'Toggle centered reading column (full-width ↔ capped)'
+      ),
       icon: { name: 'book', fallback: '📖' },
       action: () => {
         window.dispatchEvent(new CustomEvent('toggleLayoutWidth'));

@@ -10,6 +10,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.2.4] - 2026-06-05
+
+### What's New
+
+#### Mermaid Full-Screen Preview
+Large diagrams no longer get squeezed into the inline container:
+- A zoom button (⤢) appears on hover over any rendered Mermaid diagram
+- Opens a full-screen overlay with **wheel-to-zoom** (centered on the cursor) and **drag-to-pan**
+- Toolbar with zoom in/out, a live zoom percentage, reset, and close controls
+- Keyboard shortcuts: `+`/`-` to zoom, `0` to fit, `Esc` to close; click the backdrop to dismiss
+- Diagrams fit-to-view on open and re-render crisply at any zoom (the SVG is resized rather than bitmap-scaled)
+
+---
+
 ## [0.2.3] - 2026-05-28
 
 ### What's New
@@ -301,7 +315,9 @@ This release includes several under-the-hood improvements that make the extensio
 
 ---
 
-[Unreleased]: https://github.com/tecaccc/marktype/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/tecaccc/marktype/compare/v0.2.4...HEAD
+[0.2.4]: https://github.com/tecaccc/marktype/compare/v0.2.3...v0.2.4
+[0.2.3]: https://github.com/tecaccc/marktype/compare/v0.2.1...v0.2.3
 [0.2.1]: https://github.com/tecaccc/marktype/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/tecaccc/marktype/compare/v0.1.7...v0.2.0
 [0.1.7]: https://github.com/tecaccc/marktype/compare/v0.1.6...v0.1.7

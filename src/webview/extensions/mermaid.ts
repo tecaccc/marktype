@@ -151,8 +151,19 @@ export const Mermaid = Node.create({
       const renderElement = document.createElement('div');
       renderElement.classList.add('mermaid-render');
 
+      // Zoom / full-screen button — opens the rendered diagram in a
+      // pannable, zoomable overlay so large diagrams stay legible.
+      const zoomBtn = document.createElement('button');
+      zoomBtn.type = 'button';
+      zoomBtn.classList.add('mermaid-zoom-btn');
+      zoomBtn.title = 'Open full-screen preview';
+      zoomBtn.setAttribute('aria-label', 'Open full-screen preview');
+      zoomBtn.textContent = '⤢';
+      zoomBtn.style.display = 'none';
+
       container.append(codeElement);
       container.appendChild(renderElement);
+      container.appendChild(zoomBtn);
 
       // Render mermaid diagram
       const renderDiagram = async () => {
@@ -160,6 +171,7 @@ export const Mermaid = Node.create({
         if (!content) {
           renderElement.innerHTML =
             '<div class="mermaid-placeholder">Enter Mermaid diagram code</div>';
+          zoomBtn.style.display = 'none';
           return;
         }
 
@@ -180,6 +192,7 @@ export const Mermaid = Node.create({
           renderElement.innerHTML = svg;
           renderElement.classList.add('rendered');
           codeElement.classList.add('hidden');
+          zoomBtn.style.display = '';
         } catch (error) {
           console.error('Mermaid rendering error:', error);
           const errorMsg = error instanceof Error ? error.message : 'Invalid diagram syntax';
@@ -190,8 +203,18 @@ export const Mermaid = Node.create({
           renderElement.appendChild(errorDiv);
           renderElement.classList.remove('rendered');
           codeElement.classList.remove('hidden');
+          zoomBtn.style.display = 'none';
         }
       };
+
+      // Open the full-screen zoom/pan preview. Stop propagation so the click
+      // doesn't also trigger node selection / highlight / edit handlers.
+      zoomBtn.addEventListener('mousedown', e => e.stopPropagation());
+      zoomBtn.addEventListener('click', async e => {
+        e.stopPropagation();
+        const { showMermaidPreview } = await import('../features/mermaidPreview');
+        showMermaidPreview(renderElement.innerHTML);
+      });
 
       renderDiagram();
 
